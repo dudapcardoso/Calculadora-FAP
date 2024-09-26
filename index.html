@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora FAP</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #007bff;
+        }
+
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: 500;
+        }
+
+        .form-control {
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .results {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .results p {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .highlight {
+            border: 2px solid #ffeb3b;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .description {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #detalhesCalculo, #formulaResolvida {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .form-row .form-group:last-child {
+            margin-right: 0;
+        }
+
+        .nav-tabs {
+            margin-bottom: 20px;
+        }
+
+        .tab-content {
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora FAP</h1>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="calculadora-tab" data-toggle="tab" href="#calculadora" role="tab" aria-controls="calculadora" aria-selected="true">Calculadora do FAP</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="manual-tab" data-toggle="tab" href="#manual" role="tab" aria-controls="manual" aria-selected="false">Manual da Calculadora</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="oqueefap-tab" data-toggle="tab" href="#oqueefap" role="tab" aria-controls="oqueefap" aria-selected="false">O que é o FAP</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="acessoafap-tab" data-toggle="tab" href="#acessoafap" role="tab" aria-controls="acessoafap" aria-selected="false">Acesso ao FAP</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contestacao-tab" data-toggle="tab" href="#contestacao" role="tab" aria-controls="contestacao" aria-selected="false">Contestação do FAP</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="calculadora" role="tabpanel" aria-labelledby="calculadora-tab">
+                <form id="fapForm">
+                    <h3>Dados do Cálculo</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="catObito">Comunicação de Acidente de Trabalho (CAT):</label>
+                            <input type="number" class="form-control" id="catObito" placeholder="Digite o valor">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantidadeB91">Auxílio por incapacidade temporária por acidente de trabalho (B91):</label>
+                            <input type="number" class="form-control" id="quantidadeB91" placeholder="Digite o valor">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantidadeB92">Aposentadoria por incapacidade permanente por acidente de trabalho (B92):</label>
+                            <input type="number" class="form-control" id="quantidadeB92" placeholder="Digite o valor">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quantidadeB93">Pensão por morte por acidente de trabalho (B93):</label>
+                            <input type="number" class="form-control" id="quantidadeB93" placeholder="Digite o valor">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantidadeB94">Auxílio-acidente por acidente de trabalho (B94):</label>
+                            <input type="number" class="form-control" id="quantidadeB94" placeholder="Digite o valor">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="massaSalarial">Massa Salarial (R$):</label>
+                            <input type="text" class="form-control" id="massaSalarial" placeholder="Digite o valor" inputmode="decimal">
+                        </div>
+                        <div class="form-group">
+                            <label for="numeroMedioVinculos">Número Médio de Vínculos:</label>
+                            <input type="number" class="form-control" id="numeroMedioVinculos" step="0.0001" placeholder="Digite o valor">
+                        </div>
+                        <div class="form-group">
+                            <label for="totalEstabelecimentosCNAE">Total de Estabelecimentos na subclasse CNAE:</label>
+                            <input type="number" class="form-control" id="totalEstabelecimentosCNAE" placeholder="Digite o valor">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="valorBeneficios">Valor Total de Benefícios Pagos (R$):</label>
+                            <input type="text" class="form-control" id="valorBeneficios" placeholder="Digite o valor" inputmode="decimal">
+                        </div>
+                        <div class="form-group">
+                            <label for="totalEstabelecimentos">Total de Estabelecimentos na subclasse CNAE com todos os insumos necessários ao cálculo do FAP:</label>
+                            <input type="number" class="form-control" id="totalEstabelecimentos" placeholder="Digite o valor">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cnae">CNAE - Classificação Nacional de Atividades Econômicas (Subclasse da CNAE - 2.3):</label>
+                        <input type="text" class="form-control" id="cnae" placeholder="Digite o valor">
+                    </div>
+
+                    <h3>Indicadores do Cálculo</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nOrdemFrequencia">Número Ordem Frequência:</label>
+                            <input type="number" class="form-control" id="nOrdemFrequencia" step="0.0001" placeholder="Digite o valor">
+                        </div>
+                        <div class="form-group">
+                            <label for="nOrdemGravidade">Número Ordem Gravidade:</label>
+                            <input type="number" class="form-control" id="nOrdemGravidade" step="0.0001" placeholder="Digite o valor">
+                        </div>
+                        <div class="form-group">
+                            <label for="nOrdemCusto">Número Ordem Custo:</label>
+                            <input type="number" class="form-control" id="nOrdemCusto" step="0.0001" placeholder="Digite o valor">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taxaRotatividade">Taxa Média de Rotatividade (%):</label>
+                        <input type="number" class="form-control" id="taxaRotatividade" step="0.0001" placeholder="Digite o valor">
+                    </div>
+
+                    <button type="button" onclick="calcularFAP()">Calcular FAP</button>
+                </form>
+
+                <div class="results" id="resultados" style="display:none;">
+                    <h2>Resultados</h2>
+                    <p id="resultadoFrequencia"></p>
+                    <p id="resultadoGravidade"></p>
+                    <p id="resultadoCusto"></p>
+                    <p id="resultadoPercentilFrequencia"></p>
+                    <p id="resultadoPercentilGravidade"></p>
+                    <p id="resultadoPercentilCusto"></p>
+                    <p id="resultadoIndiceComposto"></p>
+                    <p id="resultadoFapCalculado" class="highlight"></p>
+                    <button id="detalhesCalculoBtn" onclick="mostrarDetalhesCalculo()">Detalhes do cálculo</button>
+                </div>
+
+                <div id="detalhesCalculo">
+                    <h3>Detalhes do Cálculo</h3>
+                    <p>
+                        <strong>ÍNDICE DE FREQUÊNCIA</strong> = (“Auxílio por incapacidade temporária por acidente de trabalho (B91)” + “Aposentadoria por incapacidade permanente por acidente de trabalho (B92)” + “Pensão por morte por acidente de trabalho (B93)” + “Auxílio-acidente por acidente de trabalho (B94)” + “Comunicação de Acidente de Trabalho (CAT)” ) / “Número Médio de Vínculos” * 1000
+                    </p>
+                    <p>
+                        <strong>ÍNDICE DE GRAVIDADE</strong> = ((“Auxílio por incapacidade temporária por acidente de trabalho (B91)” * 0,1) + (“Aposentadoria por incapacidade permanente por acidente de trabalho (B92)” * 0,3) + (“Pensão por morte por acidente de trabalho (B93)” * 0,5) + (“Auxílio-acidente por acidente de trabalho (B94)” * 0,1) + (“Comunicação de Acidente de Trabalho (CAT)” * 0,5)) / “Número Médio de Vínculos” * 1000
+                    </p>
+                    <p>
+                        <strong>ÍNDICE DE CUSTO</strong> = “Valor Total de Benefícios Pagos” / “Massa Salarial” * 1000
+                    </p>
+                    <p>
+                        <strong>PERCENTIL FREQUÊNCIA</strong> = ((“NORDEM de FREQUENCIA” - 1) / (“Total de Estabelecimentos na subclasse CNAE com todos os insumos necessários ao cálculo do FAP” - 1)) * 100
+                    </p>
+                    <p>
+                        <strong>PERCENTIL GRAVIDADE</strong> = ((“NORDEM de GRAVIDADE” - 1) / (“Total de Estabelecimentos na subclasse CNAE com todos os insumos necessários ao cálculo do FAP” - 1)) * 100
+                    </p>
+                    <p>
+                        <strong>PERCENTIL CUSTO</strong> = ((“NORDEM de CUSTO” - 1) / (“Total de Estabelecimentos na subclasse CNAE com todos os insumos necessários ao cálculo do FAP” - 1)) * 100
+                    </p>
+                    <p>
+                        <strong>ÍNDICE COMPOSTO</strong> = ((0,5 * “PERCENTIL de GRAVIDADE”) + (0,35 * “PERCENTIL de FREQUENCIA”) + (0,15 * “PERCENTIL de CUSTO”)) * 0,02
+                    </p>
+                    <p>
+                        <strong>FAP CALCULADO</strong> = SE (“INDICE COMPOSTO” <= 0,5; 0,5; “INDICE COMPOSTO”)
+                    </p>
+                </div>
+
+                <div id="formulaResolvida">
+                    <h3>Fórmula Resolvida</h3>
+                    <p id="formulaResolvidaTexto"></p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="manual" role="tabpanel" aria-labelledby="manual-tab">
+                <div class="description">
+                    <h3>Manual de Utilização da Calculadora FAP</h3>
+                    <p>Bem-vindo à calculadora FAP!</p>
+                    <p>Esta ferramenta foi criada para facilitar o cálculo do Fator Acidentário de Prevenção (FAP) com base nos dados fornecidos no portal oficial do FAP.</p>
+                    <h4>Passo a Passo para Utilização:</h4>
+                    <ol>
+                        <li>Acesse o portal FAP:
+                            <ul>
+                                <li>Entre no portal oficial do FAP através do link: <a href="https://fap.dataprev.gov.br/" target="_blank">https://fap.dataprev.gov.br/</a>.</li>
+                                <li>Faça o login utilizando seu certificado digital ou por meio de uma procuração eletrônica cadastrada.</li>
+                            </ul>
+                        </li>
+                        <li>Selecione o ano e o CNPJ:
+                            <ul>
+                                <li>Após o login, escolha o ano e o CNPJ da empresa para a qual você deseja recalcular o FAP.</li>
+                            </ul>
+                        </li>
+                        <li>Preencha os campos da calculadora:
+                            <ul>
+                                <li>Transfira os dados obtidos no portal FAPWeb para os campos correspondentes na calculadora FAP.</li>
+                                <li>O layout foi projetado para ser o mais similar possível ao portal FAPWeb, facilitando o preenchimento.</li>
+                                <li><strong>Atenção:</strong> Certifique-se de que todos os dados estão corretos, respeitando as casas decimais conforme exibido no portal (exemplo: 1,7895 ao invés de 1,79).</li>
+                            </ul>
+                        </li>
+                        <li>Clique em "Calcular":
+                            <ul>
+                                <li>Após preencher todos os campos corretamente, clique no botão Calcular para que a calculadora processe os dados e forneça os resultados detalhados do FAP.</li>
+                            </ul>
+                        </li>
+                        <li>Revise os resultados:
+                            <ul>
+                                <li>Compare os resultados gerados pela calculadora com os valores informados no FAPWeb, verificando se há alguma divergência no preenchimento.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <h4>Dicas Importantes:</h4>
+                    <ul>
+                        <li>Verifique com atenção os números copiados do FAPWeb antes de realizar o cálculo.</li>
+                        <li>A precisão dos dados é fundamental para evitar erros que possam impactar negativamente no cálculo final do FAP da sua empresa.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="oqueefap" role="tabpanel" aria-labelledby="oqueefap-tab">
+                <div class="description">
+                    <h3>O que é o FAP?</h3>
+                    <p>O Fator Acidentário de Prevenção – FAP é um multiplicador, atualmente calculado por estabelecimento, que varia de 0,5000 a 2,0000, a ser aplicado sobre as alíquotas de 1%, 2% ou 3% da tarifação coletiva por subclasse econômica, incidentes sobre a folha de salários das empresas para custear aposentadorias especiais e benefícios decorrentes de acidentes de trabalho. O FAP varia anualmente. É calculado sempre sobre os dois últimos anos de todo o histórico de acidentalidade e de registros acidentários da Previdência Social.</p>
+                    <p>Pela metodologia do FAP, as empresas que registrarem maior número de acidentes ou doenças ocupacionais, pagam mais. Por outro lado, o Fator Acidentário de Prevenção – FAP aumenta a bonificação das empresas que registram acidentalidade menor. No caso de nenhum evento de acidente de trabalho, a empresa é bonificada com a redução de 50% da alíquota.</p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="acessoafap" role="tabpanel" aria-labelledby="acessoafap-tab">
+                <div class="description">
+                    <h3>Acesso ao FAP</h3>
+                    <p>O sistema para as empresas consultarem o valor do Fator Acidentário de Prevenção (FAP), bem como apresentarem contestação e recurso ao FAP atribuído a cada estabelecimento empresarial foi modernizado para garantir melhor fluidez nas consultas, adequar a estrutura às novas tecnologias disponíveis, modernizar os layouts e alterar a forma de acesso, que agora é realizada pelo GOV.BR e não mais pela senha de serviços previdenciários cadastrada na Receita Federal do Brasil.</p>
+                    <p>Desde dezembro de 2022 a nova aplicação está disponível para a consulta ao FAP com a finalidade de substituir a aplicação anteriormente utilizada, permitindo a consulta ao FAP e aos elementos do cálculo, bem como o envio e consulta de contestações e recursos apresentados pela empresa. Ressalta-se que as informações exibidas na nova aplicação são as mesmas existentes na aplicação antiga, incluindo as vigências anteriores, visto que a base de dados é única, alterando-se apenas o layout de apresentação e a experiência de usabilidade.</p>
+                    <p>Assim, a consulta aos elementos do FAP e o cadastramento e acompanhamento das contestações e recursos deve ser feita com acesso pela conta “gov.br” (maiores informações podem ser obtidas em <a href="https://www.gov.br/governodigital/pt-br/conta-gov-br/conta-gov-br/" target="_blank">https://www.gov.br/governodigital/pt-br/conta-gov-br/conta-gov-br/</a> e a resposta às perguntas frequentes podem ser consultadas em <a href="https://acesso.gov.br/faq/" target="_blank">https://acesso.gov.br/faq/</a>).</p>
+                    <p>O FAP pode ser acessado clicando no link: <a href="https://fap.dataprev.gov.br/" target="_blank">https://fap.dataprev.gov.br/</a></p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="contestacao" role="tabpanel" aria-labelledby="contestacao-tab">
+                <div class="description">
+                    <h3>Contestação do FAP</h3>
+                    <p>O Fator Acidentário de Prevenção (FAP) é um índice que impacta diretamente a alíquota de contribuição do Seguro de Acidente de Trabalho (SAT) da sua empresa. Ocorre que, não raro, o FAP é calculado de maneira equivocada, aumentando indevidamente a contribuição previdenciária no ano seguinte.</p>
+                    <p>A partir de 1º de novembro, sua empresa terá a oportunidade de contestar os dados que foram computados, corrigindo os erros e evitando a majoração indevida da contribuição previdenciária.</p>
+                    <p>O índice FAP é divulgado todo dia 30 de setembro, e a Receita Federal abre um prazo para protocolar a contestação de 1º a 30 de outubro.</p>
+                    
+                    <h3>Economia Significativa com a Contestação do FAP</h3>
+                    <p>A contestação do FAP pode gerar uma economia significativa para sua empresa. Por exemplo, considere uma empresa cuja folha de pagamentos mensal é de R$ 400.000,00 e o RAT é 3,0.</p>
+                    <p>Se o FAP majorado foi de 1,7859, isso significa que a empresa recolherá a alíquota de RAT ajustado de 4,1088%. Com isso, a contribuição ao SAT seria:</p>
+                    
+                    <h4>Contribuição com FAP majorado:</h4>
+                    <p>R$ 400.000,00 × 4,1088% = R$ 16.435,20 ao mês</p>
+                    <p>Total anual: R$ 16.435,20 × 12 = R$ 197.222,40</p>
+                    
+                    <p>Entretanto, se o FAP fosse corretamente calculado como 0,5000, a alíquota de RAT ajustado seria de 1,5%. Nesse cenário, a contribuição seria:</p>
+                    
+                    <h4>Contribuição com FAP correto:</h4>
+                    <p>R$ 400.000,00 × 1,5% = R$ 6.000,00 ao mês</p>
+                    <p>Total anual: R$ 6.000,00 × 12 = R$ 72.000,00</p>
+                    
+                    <h3>Impacto Financeiro</h3>
+                    <p>A diferença entre as contribuições devido ao cálculo incorreto do FAP seria:</p>
+                    
+                    <h4>Economia Anual:</h4>
+                    <p>R$ 197.222,40 - R$ 72.000,00 = R$ 125.222,40</p>
+                    <p>Isso demonstra como a contestação do FAP pode representar uma economia significativa!</p>
+                    
+                    <h3>Adquira Nosso eBook e Aprenda a Contestação do FAP!</h3>
+                    <p>Por apenas R$ 39,90, você terá acesso a:</p>
+                    <ul>
+                        <li>11 Possíveis Divergências: Identifique os erros comuns que podem afetar seu FAP.</li>
+                        <li>Passo a Passo Completo: Entenda como contestar de maneira eficaz e correta.</li>
+                        <li>Dicas Práticas: Estratégias que facilitam o processo de contestação.</li>
+                    </ul>
+                    <p>Não deixe que um índice incorreto impacte a saúde financeira da sua empresa!</p>
+                    <a href="https://go.hotmart.com/H95717996W" class="btn btn-primary">Comprar eBook</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function formatCurrency(input) {
+            var value = input.value.replace(/\D/g, '');
+            value = (value / 100).toFixed(2) + '';
+            value = value.replace(".", ",");
+            value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+            input.value = 'R$ ' + value;
+        }
+
+        function parseCurrency(value) {
+            return parseFloat(value.replace(/[R$\s.]/g, '').replace(',', '.'));
+        }
+
+        document.getElementById('massaSalarial').addEventListener('input', function() {
+            formatCurrency(this);
+        });
+
+        document.getElementById('valorBeneficios').addEventListener('input', function() {
+            formatCurrency(this);
+        });
+
+        function calcularFAP() {
+            // Obter valores dos inputs
+            var catObito = parseFloat(document.getElementById('catObito').value);
+            var massaSalarial = parseCurrency(document.getElementById('massaSalarial').value);
+            var numeroMedioVinculos = parseFloat(document.getElementById('numeroMedioVinculos').value);
+            var totalEstabelecimentos = parseFloat(document.getElementById('totalEstabelecimentos').value);
+            var quantidadeB91 = parseFloat(document.getElementById('quantidadeB91').value);
+            var quantidadeB92 = parseFloat(document.getElementById('quantidadeB92').value);
+            var quantidadeB93 = parseFloat(document.getElementById('quantidadeB93').value);
+            var quantidadeB94 = parseFloat(document.getElementById('quantidadeB94').value);
+            var valorBeneficios = parseCurrency(document.getElementById('valorBeneficios').value);
+            var nOrdemFrequencia = parseFloat(document.getElementById('nOrdemFrequencia').value);
+            var nOrdemGravidade = parseFloat(document.getElementById('nOrdemGravidade').value);
+            var nOrdemCusto = parseFloat(document.getElementById('nOrdemCusto').value);
+            var taxaRotatividade = parseFloat(document.getElementById('taxaRotatividade').value);
+
+            // Cálculos conforme fórmulas fornecidas
+            var indiceFrequencia = (quantidadeB91 + quantidadeB92 + quantidadeB93 + quantidadeB94 + catObito) / numeroMedioVinculos * 1000;
+            var indiceGravidade = ((quantidadeB91 * 0.1) + (quantidadeB92 * 0.3) + (quantidadeB93 * 0.5) + (quantidadeB94 * 0.1) + (catObito * 0.5)) / numeroMedioVinculos * 1000;
+            var indiceCusto = valorBeneficios / massaSalarial * 1000;
+
+            var percentilFrequencia = ((nOrdemFrequencia - 1) / (totalEstabelecimentos - 1)) * 100;
+            var percentilGravidade = ((nOrdemGravidade - 1) / (totalEstabelecimentos - 1)) * 100;
+            var percentilCusto = ((nOrdemCusto - 1) / (totalEstabelecimentos - 1)) * 100;
+
+            var indiceComposto = ((0.5 * percentilGravidade) + (0.35 * percentilFrequencia) + (0.15 * percentilCusto)) * 0.02;
+            var fapCalculado = indiceComposto <= 0.5 ? 0.5 : indiceComposto;
+
+            // Condição adicional para FAP Calculado
+            if (fapCalculado < 1.0000 && taxaRotatividade >= 75.0000) {
+                fapCalculado = 1.0000;
+            }
+
+            // Exibir resultados
+            document.getElementById('resultadoFrequencia').textContent = 'Índice de Frequência: ' + indiceFrequencia.toFixed(4);
+            document.getElementById('resultadoGravidade').textContent = 'Índice de Gravidade: ' + indiceGravidade.toFixed(4);
+            document.getElementById('resultadoCusto').textContent = 'Índice de Custo: ' + indiceCusto.toFixed(4);
+            document.getElementById('resultadoPercentilFrequencia').textContent = 'Percentil Frequência: ' + percentilFrequencia.toFixed(4) + '%';
+            document.getElementById('resultadoPercentilGravidade').textContent = 'Percentil Gravidade: ' + percentilGravidade.toFixed(4) + '%';
+            document.getElementById('resultadoPercentilCusto').textContent = 'Percentil Custo: ' + percentilCusto.toFixed(4) + '%';
+            document.getElementById('resultadoIndiceComposto').textContent = 'Índice Composto: ' + indiceComposto.toFixed(4);
+            document.getElementById('resultadoFapCalculado').textContent = 'FAP Calculado: ' + fapCalculado.toFixed(4);
+
+            // Mostrar a div de resultados
+            document.getElementById('resultados').style.display = 'block';
+            document.getElementById('detalhesCalculoBtn').style.display = 'block';
+
+            // Detalhes do cálculo
+            var detalhesTexto = `
+                Índice de Frequência: ${indiceFrequencia.toFixed(4)}\n
+                Índice de Gravidade: ${indiceGravidade.toFixed(4)}\n
+                Índice de Custo: ${indiceCusto.toFixed(4)}\n
+                Percentil Frequência: ${percentilFrequencia.toFixed(4)}%\n
+                Percentil Gravidade: ${percentilGravidade.toFixed(4)}%\n
+                Percentil Custo: ${percentilCusto.toFixed(4)}%\n
+                Índice Composto: ${indiceComposto.toFixed(4)}\n
+                FAP Calculado: ${fapCalculado.toFixed(4)}
+            `;
+            document.getElementById('detalhesCalculoTexto').textContent = detalhesTexto;
+
+            // Fórmula resolvida
+            var formulaResolvidaTexto = `
+                <strong>ÍNDICE DE FREQUÊNCIA</strong> = (${quantidadeB91} + ${quantidadeB92} + ${quantidadeB93} + ${quantidadeB94} + ${catObito}) / ${numeroMedioVinculos} * 1000 = ${indiceFrequencia.toFixed(4)}<br>
+                <strong>ÍNDICE DE GRAVIDADE</strong> = ((${quantidadeB91} * 0.1) + (${quantidadeB92} * 0.3) + (${quantidadeB93} * 0.5) + (${quantidadeB94} * 0.1) + (${catObito} * 0.5)) / ${numeroMedioVinculos} * 1000 = ${indiceGravidade.toFixed(4)}<br>
+                <strong>ÍNDICE DE CUSTO</strong> = ${valorBeneficios} / ${massaSalarial} * 1000 = ${indiceCusto.toFixed(4)}<br>
+                <strong>PERCENTIL FREQUÊNCIA</strong> = ((${nOrdemFrequencia} - 1) / (${totalEstabelecimentos} - 1)) * 100 = ${percentilFrequencia.toFixed(4)}%<br>
+                <strong>PERCENTIL GRAVIDADE</strong> = ((${nOrdemGravidade} - 1) / (${totalEstabelecimentos} - 1)) * 100 = ${percentilGravidade.toFixed(4)}%<br>
+                <strong>PERCENTIL CUSTO</strong> = ((${nOrdemCusto} - 1) / (${totalEstabelecimentos} - 1)) * 100 = ${percentilCusto.toFixed(4)}%<br>
+                <strong>ÍNDICE COMPOSTO</strong> = ((0.5 * ${percentilGravidade.toFixed(4)}) + (0.35 * ${percentilFrequencia.toFixed(4)}) + (0.15 * ${percentilCusto.toFixed(4)})) * 0.02 = ${indiceComposto.toFixed(4)}<br>
+                <strong>FAP CALCULADO</strong> = ${fapCalculado.toFixed(4)}
+            `;
+            document.getElementById('formulaResolvidaTexto').innerHTML = formulaResolvidaTexto;
+        }
+
+        function mostrarDetalhesCalculo() {
+            document.getElementById('detalhesCalculo').style.display = 'block';
+            document.getElementById('formulaResolvida').style.display = 'block';
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
