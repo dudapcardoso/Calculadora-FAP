@@ -13,18 +13,22 @@
         header {
             background-color: #0056b3; /* Azul mais escuro */
             color: white;
-            height: 70px; /* Defina a altura do cabeçalho */
+            height: 200px; /* Defina a altura do cabeçalho */
             display: flex; /* Usar flexbox para alinhar os itens */
             align-items: center; /* Alinhar verticalmente */
             padding: 0 10px; /* Padding lateral, sem padding superior/inferior */
+            position: relative; /* Para permitir o posicionamento absoluto do título */
         }
         .logo {
-            max-height: 70px; /* Ajuste a altura da logo para igualar ao cabeçalho */
-            margin-right: 10px; /* Espaçamento à direita do logo */
+            max-height: 200px; /* Ajuste a altura da logo para igualar ao cabeçalho */
         }
         h1 {
             font-size: 1.5em; /* Ajuste do tamanho do título */
             margin: 0; /* Remove margens do título */
+            color: white; /* Cor do título em branco */
+            position: absolute; /* Permite sobrepor ao cabeçalho */
+            left: 10px; /* Posiciona à esquerda */
+            bottom: 10px; /* Ajusta a posição vertical */
         }
         p {
             font-size: 0.9em; /* Ajuste do tamanho da descrição */
@@ -39,10 +43,7 @@
 
 <header>
     <img src="/Logo%20FAP.png" alt="Logo do FAP" class="logo">
-    <div>
-        <h1>Calculadora FAP</h1>
-        <p>Uma ferramenta para calcular o Fator Acidentário de Prevenção.</p>
-    </div>
+    <h1>Calculadora FAP</h1>
 </header>
 
 <div class="container">
