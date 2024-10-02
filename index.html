@@ -13,21 +13,25 @@
         header {
             background-color: #0056b3; /* Azul mais escuro */
             color: white;
-            height: 200px; /* Defina a altura do cabeçalho */
+            height: 70px; /* Defina a altura do cabeçalho */
+            display: flex; /* Usar flexbox para alinhar os itens */
             align-items: center; /* Alinhar verticalmente */
-            justify-content: center;
-            padding: 0 10px; /* Padding lateral, sem padding superior/inferior */
+            justify-content: center; /* Centraliza os itens */
             position: relative; /* Para permitir o posicionamento absoluto do título */
+            padding: 0 10px; /* Padding lateral, sem padding superior/inferior */
         }
         .logo {
-            max-height: 200px; /* Ajuste a altura da logo para igualar ao cabeçalho */
+            max-height: 70px; /* Ajuste a altura da logo para igualar ao cabeçalho */
+            margin-right: 10px; /* Espaçamento à direita do logo */
+            position: absolute; /* Mantém a logo na esquerda */
+            left: 10px; /* Posiciona à esquerda */
         }
         h1 {
             font-size: 1.5em; /* Ajuste do tamanho do título */
+            margin: 0; /* Remove margens do título */
             color: white; /* Cor do título em branco */
-            position: absolute; /* Permite sobrepor ao cabeçalho */
-            text-align: center;
-            bottom: 10px; /* Ajusta a posição vertical */
+            position: relative; /* Ajusta para centralização */
+            text-align: center; /* Centraliza o texto */
         }
         .container {
             padding: 20px;
